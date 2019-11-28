@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ include('login/inc/header.html.twig') }}
+
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({
+            selector:'textarea',
+            plugins: "code",
+            relative_urls : false,
+            valid_elements : '*[*]'
+        });
+    </script>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="container mt-5">
+            <div class="row">
+
+                <div class="col-xl-2 col-lg-2 col-md-2">
+                    <div class="btn-group-vertical">
+                        <button class="btn btn-default" name="edit" value="1" type="submit">
+                            <em class="fa fa-save"></em> Save
+                        </button>
+                        <a class="btn btn-light" href="../list_overview/">
+                            <em class="fa fa-arrow-left"></em> Return
+                        </a>
+                    </div><!-- btn-group btn-group-vertical Ende -->
+                </div>
+
+                <div class="col-xl-10 col-lg-10 col-md-10">
+
+                    <div class='form-group'>
+                        <label id='edit_'>Titel</label>
+                        <input class='form-control' type='text' name='foodName' value='{{ food.name }}'>
+                    </div><!-- form-group end -->
+
+                    <div class='form-group'>
+                        <label id='edit_'>Zubereitung</label>
+                        <textarea class='form-control' name='description'>{{ food.description }}</textarea>
+                    </div><!-- form-group end -->
+
+                    <div class='form-group'>
+                        <label id='edit_'>Zutaten</label>
+                        <textarea class='form-control' name='description2'>{{ food.description2 }}</textarea>
+                    </div><!-- form-group end -->
+
+                    <div class='form-group'>
+                        <label id='edit_'>Dauer der Zubereitung</label>
+                        <input class='form-control' type='text' name='duration' value='{{ food.duration }}'>
+                    </div><!-- form-group end -->
+
+                    <div class='form-group'>
+                        <label id='edit_'>Bild</label>
+
+                        <div class="input-group">
+                            <img src="../../content/{{ food.pictureName }}" class="img-thumbnail" id="upload-picture" style="width: 17rem;"><br />
+                            <!--<input class='form-control' type='text' readonly name='foodPicture' value='{{ food.pictureName }}'>-->
+
+                            <!--<div class="btn btn-primary input-group-text"><span class="fa fa-search"></span></div>-->
+                            <input type="file" class="form-control-file" name="picture" accept="image/x-png,image/gif,image/jpeg" id="exampleFormControlFile1">
+                            <input type="hidden" name="picture-name" value="{{ food.pictureName }}">
+                        </div>
+                    </div><!-- form-group end -->
+
+                    <div class="input-group">
+                        <label id='edit_'>Erstellt am</label>
+                        <div class="input-group">
+                            <input type="text" disabled name="creationDate" value="{{ food.creationDate|date("d.m.Y H:i:s") }}" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>
+                        </div>
+                    </div><!-- input-group end -->
+
+                    <div class='form-group'>
+                        <label id='edit_'>Sichtbar</label>
+                        <!--<input class='form-control' type='text' name='news_visible' value=''>-->
+                        <select class='form-control' name='visible'>
+                            <option value="1" {{ food.visible == 1 ? "selected" }}>Ja</option>
+                            <option value="2" {{ food.visible == 2 ? "selected" }}>Nein</option>
+                        </select>
+
+                    </div><!-- form-group end -->
+
+                </div>
+                    
+            </div><!-- row ende -->
+
+        </div><!-- container ende -->
+
+    </form><!-- FORM Ende -->
+
+
+    <script type="text/javascript">
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imageThumbnail = document.querySelector("#upload-picture");
+                    imageThumbnail.setAttribute("src", e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        const uploadContent = document.querySelector("#exampleFormControlFile1");
+
+        uploadContent.addEventListener("change", function() {
+            readURL(this);
+        });
+
+    </script>
+
+{% endblock %}

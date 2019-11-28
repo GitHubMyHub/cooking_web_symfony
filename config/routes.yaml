@@ -1,0 +1,16 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+get_food_json:
+  path: /foodSearch/{term}
+  methods: [GET]
+  defaults:
+    _controller: App\Controller\HomeController::foodSearch
+    _format: json
+
+get_likes_json:
+  path: /setLikes/
+  methods: [GET]
+  defaults:
+    _controller: App\Controller\HomeController::setLikes
+    _format: json

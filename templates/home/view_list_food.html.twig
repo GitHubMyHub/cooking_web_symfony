@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {{ include('inc/header.html.twig') }}
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="position: relative;">
+                <img class="d-block w-100" title="{{ food.name }}" src="../content/{{ food.pictureName }}" alt="{{ food.name }}">
+                <button style="position: absolute; right: 4rem; bottom: 4rem;" id="likeIt" type="button" class="btn btn-danger active" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Liked!"><span class="fa fa-2x fa-heart" style="color: white;"></span> Like It!</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container align-center mt-5">
+
+        <div class="row d-flex justify-content-center">
+            <h1 class="display-5 mb-4">{{ food.name }}</h1>
+
+        </div>
+    </div>
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <button type="button" class="btn social mr-2" style="background-color: #1da1f2; color: white;" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Geteilt auf Twitter">
+                <span title="Teile auf Twitter" class="fa fa-2x fa-twitter"></span>
+            </button>
+            <button type="button" class="btn social mr-2" style="background-color: #3b5998; color: white;" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Geteilt auf Facebook">
+                <span title="Teile auf Facebook" class="fa fa-2x fa-facebook"></span>
+            </button>
+            <button type="button" class="btn social mr-2" style="background-color: #cd486b; color: white;" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Geteilt auf Instagram">
+                <span title="Teile auf Instagram" class="fa fa-2x fa-instagram"></span>
+            </button>
+            <button type="button" class="btn social mr-2" style="background-color: #e95950; color: white;" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Geteilt auf Pinterest">
+                <span title="Teile auf Pinterest" class="fa fa-2x fa-pinterest"></span>
+            </button>
+            <button type="button" class="btn social mr-2 btn-light active" data-trigger="focus" data-toggle="popover" data-placement="top" data-content="Geteilt!">
+                <span  title="Teilen" class="fa fa-2x fa-share-alt"></span>
+            </button>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="card mr-2" style="width: 8rem;">
+                <span class="card-img-top fa fa-2x fa-history d-flex mt-5 justify-content-center"></span>
+                <div class="card-body d-flex justify-content-center">
+                    <h5 class="card-title">{{ food.duration|date('H:i') }} mins</h5>
+                </div>
+            </div>
+            <div class="card mr-2" style="width: 8rem;">
+                <span class="card-img-top fa fa-2x fa-heart d-flex mt-5 justify-content-center"></span>
+                <div class="card-body d-flex justify-content-center">
+                    <h5 class="card-title" id="likeCounter">{{ food.foodLike is not null ? food.foodLike : "0" }}</h5>
+                </div>
+            </div>
+            <div class="card mr-2" style="width: 8rem;">
+                <span class="card-img-top fa fa-2x fa-calendar d-flex mt-5 justify-content-center"></span>
+                <div class="card-body d-flex justify-content-center">
+                    <h5 class="card-title">{{ food.creationDate|date("d.m.Y") }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5" style="padding: 0 5rem 0 5rem">
+        <div class="card">
+            <h5 class="card-header">Zubereitung</h5>
+            <div class="card-body">
+                <p class="card-text">{{ food.description|raw }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5" style="padding: 0 5rem 0 5rem">
+        <div class="card">
+            <h5 class="card-header">Zutaten</h5>
+            <div class="card-body">
+                <p class="card-text">{{ food.description2|raw }}</p>
+            </div>
+        </div>
+    </div>
+    {{ include('inc/footer.html.twig') }}
+{% endblock %}

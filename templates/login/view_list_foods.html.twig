@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ include('login/inc/header.html.twig') }}
+
+    <div class="container">
+
+        <div class="row form_container">
+
+            <div class="col-md-2">
+                <div class="btn-group-vertical">
+
+                    <a class="btn btn-light" href="/admin/food_new">
+                        <em class="fa fa-plus"></em> New Entry
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-10">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"><span class="fa fa-picture-o"></span> </th>
+                        <th scope="col">Titel</th>
+                        <th scope="col">Likes</th>
+                        <th scope="col">Options</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for food in foods %}
+                        <tr>
+                            <th scope="row">{{ food.id }}</th>
+                            <td><img src="../../content/{{ food.pictureName }}" class="img-thumbnail" style="width: 7rem;"></td>
+                            <td>{{ food.name }}</td>
+                            <td>{{ food.foodLike is not null ? food.foodLike : "0" }}</td>
+                            <td>
+                                <div class="btn-group-vertical">
+                                    <a href="../food_edit/{{ food.id }}" class="btn btn-light far" type="button">
+                                        <em class="fa fa-pencil"></em> Bearbeiten</a>
+                                    <a href="../../food/{{ food.id }}" class="btn btn-light far" type="button">
+                                        <em class="fa fa-eye"></em> Preview</a>
+                                    <a href="../food_delete" name="{{ food.id }}" class="btn btn-danger far" type="button" data-toggle="modal" data-target="#exampleModal">
+                                        <em class="fa fa-minus"></em> Löschen</a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-lg-12 col-md-12 col-xs-12 text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item
+                            {% if page <= 1 %}
+                                disabled
+                            {% endif %}">
+                        <a class="page-link" href="../list_overview/{{ page-1 }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+
+                    {% for i in range(1, pages) %}
+                        <li class="page-item"><a class="page-link" href="../list_overview/{{ i }}">{{ i }}</a></li>
+                    {% endfor %}
+
+                    <li class="page-item
+                            {% if (page+1) > pages %}
+                                disabled
+                            {% endif %}">
+                        <a class="page-link" href="../list_overview/{{ page+1 }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div><!-- col-md-10 Ende -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Eintrag löschen</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Soll der Eintrag gelöscht werden.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
+                    <button type="button" id="deleteEntryModalButton" class="btn btn-danger">Löschen</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div><!-- container end -->
+
+    <script type="text/javascript">
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.log("DOM fully loaded and parsed");
+            let cacheDeleteEntry;
+
+            function clickBody(e) {
+                //console.log(e.target.name);
+                const contentId = e.target.name;
+
+                if(e.target.className === "btn btn-danger far" || e.target.className === "fa fa-minus"){
+
+                        //console.log(e.target.className);
+                        //console.log(contentId);
+                        cacheDeleteEntry = contentId;
+
+                }
+
+            }
+            document.body.addEventListener("click", clickBody);
+            document.querySelector("#deleteEntryModalButton").addEventListener("click", function() {
+                console.log(cacheDeleteEntry);
+                window.location.href = `../food_delete/${cacheDeleteEntry}`;
+            });
+        });
+    </script>
+
+{% endblock %}

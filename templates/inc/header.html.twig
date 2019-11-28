@@ -1,0 +1,58 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <img src="/images/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Food.com
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+                <a style="overflow: hidden; white-space: nowrap;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Rezepte
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/category/new"><img style="width: 1rem;" src="../images/recipe-icon.svg"> Neue Rezepte</a>
+                    <a class="dropdown-item" href="/category/vegan"><img style="width: 1rem;" src="../images/carrot_icon.svg"> Vegane Rezepte</a>
+                    <a class="dropdown-item" href="/category/bakery"><img style="width: 1rem;" src="../images/cake-icon.svg"> Back Rezepte</a>
+                </div>
+            </li>
+        </ul>
+        <form autocomplete="off" class="form-inline ml-5 my-2 my-lg-0 d-inline w-100">
+            <div class="input-group">
+                <div class="autocomplete w-50">
+                <input class="form-control" style="width: 100%" type="search" id="food-search" placeholder="Suche..." aria-label="Search">
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><span class="fa fa-search"></span></button>
+                </div>
+
+            </div>
+        </form>
+        <ul class="navbar-nav  ml-auto">
+
+                {% if userName is not defined or userName == "" %}
+                    <li class="nav-item" style="overflow: hidden; white-space: nowrap;">
+                        <a class="nav-link" href="/login"><span class="fa fa-user-circle"></span> Login</a>
+                    </li>
+                {% else %}
+                    <!--<a class="nav-link" href="/login"><span class="fa fa-user-circle"></span> {{ userName }}</a>-->
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown-right">
+                            <a style="overflow: hidden; white-space: nowrap;" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="fa fa-user-circle"></span> {{ userName }}
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/admin/list_overview"><img style="width: 1rem;" src="../images/recipe-icon.svg"> Dashboard</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/logout"><span class="fa fa-sign-out"></span> Logout</a>
+                            </div>
+                        </li>
+                    </ul>
+                {% endif %}
+
+        </ul>
+    </div>
+</nav>

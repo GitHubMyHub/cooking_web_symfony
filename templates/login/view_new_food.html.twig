@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <script>tinymce.init({
+            selector:'textarea',
+            plugins: "code",
+            relative_urls : false,
+            valid_elements : '*[*]'
+        });
+    </script>
+
+    <script type="text/javascript">
+
+
+    </script>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 col-md-12">
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="btn-group-vertical">
+
+                            <button class="btn btn-default" name="save" value="1" type="submit">
+                                <em class="fa fa-save"></em> Save
+                            </button>
+                            <a class="btn btn-light" href="../list_overview/">
+                                <em class="fa fa-arrow-left"></em> Return
+                            </a>
+                        </div><!-- btn-group btn-group-vertical Ende -->
+                    </div><!-- col-md-2 Ende -->
+
+                    <div class="col-lg-10 col-md-10">
+
+                        <div class='form-group'>
+                            <label id='edit_'>Titel</label>
+                            <input class='form-control' type='text' name='foodName' value=''>
+                        </div>
+
+                        <div class='form-group'>
+                            <label id='edit_'>Beschreibung</label>
+                            <textarea class='form-control' name='description'></textarea>
+                        </div>
+
+                        <div class='form-group'>
+                            <label id='edit_'>Bild</label>
+
+                            <div class="input-group">
+                                <img src="../../content/" class="img-thumbnail" id="upload-picture" style="width: 17rem;"><br />
+
+                                <!--<div class="btn btn-primary input-group-text"><span class="fa fa-search"></span></div>-->
+                                <input type="file" class="form-control-file" name="picture" accept="image/x-png,image/gif,image/jpeg" id="exampleFormControlFile1">
+
+                            </div>
+                        </div>
+
+                        <div class='form-group'>
+                            <label id='edit_'>Sichtbar</label>
+                            <!--<input class='form-control' type='text' name='news_visible' value=''>-->
+                            <select class='form-control' name='visible'>
+                                <option value="1">Ja</option>
+                                <option value="2">Nein</option>
+                            </select>
+
+                        </div>
+
+                    </div><!-- col-md-10 Ende -->
+                </form><!-- FORM Ende -->
+
+            </div>
+
+        </div><!-- row ende -->
+
+    </div><!-- container ende -->
+
+    <script type="text/javascript">
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const imageThumbnail = document.querySelector("#upload-picture");
+                    imageThumbnail.setAttribute("src", e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        const uploadContent = document.querySelector("#exampleFormControlFile1");
+
+        uploadContent.addEventListener("change", function() {
+            console.log("JO");
+            readURL(this);
+        });
+
+    </script>
+
+{% endblock %}

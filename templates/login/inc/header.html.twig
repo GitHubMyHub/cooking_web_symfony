@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">
+        <img src="/images/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+        Food.com
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav">
+            <li class="nav-item" style="overflow: hidden; white-space: nowrap;">
+                <a class="nav-link" href="/admin/list_overview"><span class="fa fa-list"></span> Rezepte</a>
+            </li>
+        </ul>
+        <form autocomplete="off" class="form-inline ml-5 my-2 my-lg-0 d-inline w-100">
+            <div class="input-group">
+                <div class="autocomplete w-50">
+                <input class="form-control" style="width: 100%" type="search" id="food-search" placeholder="Suche..." aria-label="Search">
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><span class="fa fa-search"></span></button>
+                </div>
+
+            </div>
+        </form>
+        <ul class="navbar-nav  ml-auto">
+            <li class="nav-item" style="overflow: hidden; white-space: nowrap;">
+                <a class="nav-link" href="/logout"><span class="fa fa-sign-out"></span> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>

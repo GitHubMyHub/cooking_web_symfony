@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{% block title %}Food.com{% endblock %}</title>
+        {% block stylesheets %}
+            <link rel="apple-touch-icon" href="/images/bootstrap-solid.svg">
+            <link rel="icon" href="/images/favicon.ico" type="image/x-icon" />
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fresca&display=swap">
+            <link rel="stylesheet" href="/css/style.css">
+        {% endblock %}
+
+    </head>
+    <body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <!-- Compiled and minified JavaScript -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script type="text/javascript">
+
+                // ItemCtrl Controller
+                const ItemCtrl = (() => {
+                    console.log("Item controller");
+
+                    let parent;
+
+                    return {
+                        setParent: (value) => {
+                            parent = value;
+                        },
+                        setItems: (arr, input) => {
+                            let b, i;
+                            const val = input.target.value;
+                            for (i = 0; i < arr.length; i++) {
+                                /*Prüfung: Ob die eingegebenen Buchstaben in der Item-Liste vorhanden sind */
+                                if (arr[i].name.substr(0, val.length).toUpperCase() === val.toUpperCase()) {
+                                    /* erstellt ein DIV element für jedes übereinstimmende Element */
+                                    b = document.createElement("DIV");
+                                    /* übereinstimmenrde Buchstaben in Fett */
+                                    b.innerHTML = "<strong>" + arr[i].name.substr(0, val.length) + "</strong>";
+                                    b.innerHTML += arr[i].name.substr(val.length);
+                                    /* erstellt ein unsichtbares Eingabefeld mit der ID */
+                                    b.innerHTML += "<input type='hidden' value='" + arr[i].id + "'>";
+                                    /* Listener wenn jemand auf den Eintrag in der Liste klickt (DIV element) */
+                                    b.addEventListener("click", (e) => {
+
+                                        val.value = this.getElementsByTagName("input")[0].value;
+                                        location.href = `http://food.com/food/${e.target.querySelector('input').value}`;
+                                        /* schließt die Liste der Dropdownliste */
+                                        UICtrl.closeAllLists();
+                                    });
+                                    //console.log(b);
+                                    parent.appendChild(b);
+                                }
+                            }
+                        },
+                        updateLikes: () => {
+                            $.get({
+                                url: `http://food.com/setLikes/`,
+                                type: 'GET',
+                                dataType: 'json',
+                                success: (data) => {
+                                    console.log(data.foodLike);
+                                    UICtrl.addLikes(data.foodLike)
+                                }
+                            });
+                        }
+                    }
+
+                })();
+
+                // UI Controller
+                const UICtrl = (() => {
+                    console.log("UI controller");
+
+                    return {
+                        removeAll: () => {
+                            $('.autocomplete-items').remove();
+                        },
+                        closeAllLists: (elmnt = null) => {
+                            /* schließt alle Dropdownlisten, außer diejenigen im übergebenen Paramater */
+                            let x = document.getElementsByClassName("autocomplete-items");
+                            const inp = document.querySelector('#food-search');
+                            for (let i = 0; i < x.length; i++) {
+                                if (elmnt !== x[i] && elmnt !== inp) {
+                                    x[i].parentNode.removeChild(x[i]);
+                                }
+                            }
+                        },
+                        addActive: (currentFocus, x) => {
+                            console.log(!x);
+                            /* funktion ob ein Element(item) aktiv ist */
+                            if (!x) return false;
+                            /* entfernt das "active" attribut von allen items */
+                            UICtrl.removeActive(x);
+                            if (currentFocus >= x.length) currentFocus = 0;
+                            if (currentFocus < 0) currentFocus = (x.length - 1);
+                            /* hinzufügen des "autocomplete-active" Klassenattributs */
+                            console.log(x);
+                            console.log(x[currentFocus]);
+                            x[currentFocus].classList.add("autocomplete-active");
+                        },
+                        removeActive: (x) => {
+                            /* Entfernung des "active" attributs von Dropdownitems */
+                            for (let i = 0; i < x.length; i++) {
+                                x[i].classList.remove("autocomplete-active");
+                            }
+                        },
+                        getRemoteItems: (e) => {
+
+                            if(e.target.value !== ""){
+                                $.get({
+                                    url: `http://food.com/foodSearch/${e.target.value}`,
+                                    type: 'GET',
+                                    dataType: 'json',
+                                    success: (data) => {
+                                        console.log(e);
+                                        UICtrl.removeAll();
+                                        UICtrl.addListContainer(document.getElementById("food-search"));
+                                        ItemCtrl.setItems(data, e);
+                                    }
+                                });
+                            }
+
+                        },
+                        addLikes: (likes) => {
+                            const likeCounter = document.querySelector("#likeCounter");
+                            const intLikeCounter = parseInt(likeCounter.innerText)
+                            likeCounter.innerText = likes;
+                        },
+                        addListContainer: (inp) => {
+                            /* div Element für die List-Items*/
+                            a = document.createElement("DIV");
+                            a.setAttribute("id", "food-searchautocomplete-list");
+                            a.setAttribute("class", "autocomplete-items");
+                            inp.parentNode.appendChild(a);
+                            ItemCtrl.setParent(a)
+                        }
+
+                    }
+
+                })();
+
+                // App Controller
+                const App = ((ItemCtrl, UICtrl) => {
+
+                    // Load event listeners
+                    const loadEventListeners = () => {
+
+                        let currentFocus = -1;
+
+                        const inp = document.getElementById("food-search");
+                        UICtrl.addListContainer(inp);
+
+                        /* Listener für den Tastendruck */
+                        $('#food-search').keyup((e) => {
+                            let x = document.getElementById("food-searchautocomplete-list");
+                            if (x) x = x.getElementsByTagName("div");
+                            console.log(e.which);
+
+                            if(e.which === 37){
+                                // LEFT key
+                                UICtrl.removeAll();
+                                //UICtrl.addListContainer(inp);
+                                UICtrl.getRemoteItems(e);
+                            }else if(e.which === 39){
+                                // RIGHT key
+                                UICtrl.removeAll();
+                                //UICtrl.addListContainer(inp);
+                                UICtrl.getRemoteItems(e);
+                            }else if (e.which === 40) {
+                                /* Pfeiltaste-Unten den Fokus auf das nächste List-Item übertragen: */
+                                currentFocus++;
+                                console.log(currentFocus);
+                                /* Eintrag markieren :*/
+                                UICtrl.addActive(currentFocus, x);
+                            } else if (e.which === 38) { //up
+                                /* Pfeiltaste-Oben den Fokus auf das vorherige List-Item übertragen */
+                                currentFocus--;
+                                console.log(currentFocus);
+                                /* Eintrag markieren :*/
+                                UICtrl.addActive(currentFocus, x);
+                            } else if (e.which === 13) {
+                                /* Wenn ENTER gedrückt: Submit unterdrücken*/
+                                e.preventDefault();
+                                if (currentFocus > -1) {
+                                    /* zu aktiven item (Eintrag) navigieren */
+                                    location.href = `http://food.com/food/${x[currentFocus].children[1].value}`;
+                                }else{
+                                    /* Enter taste drücken wenn nach Begriff im Input Feld gesucht werden soll */
+                                    location.href = `http://food.com/foodsearch/${e.target.value}`;
+                                }
+                            }else if(e.which === 27){
+                                // ESC key
+                                UICtrl.removeAll();
+                                UICtrl.addListContainer(inp);
+                            } else if(((e.which >= 48 && e.which <= 90) || (e.which >= 96 && e.which <= 105) || (e.which === 32) || (e.which === 37) || (e.which === 39)) || (e.which === 59) || (e.which === 192) || (e.which === 222) || (e.which === 8) && e.target.value !== ""){
+                                UICtrl.getRemoteItems(e);
+                            }
+
+                        });
+                        /* Listener für das ganze DOM */
+                        document.addEventListener("click", (e) => {
+                            UICtrl.closeAllLists(e.target);
+                        });
+                        /* Popover für Socialmedia-Buttons */
+                        $('[data-toggle="popover"]').popover({
+                            trigger: 'focus',
+                            delay: { "show": 300, "hide": 100 }
+                        });
+                        document.querySelector("#likeIt").addEventListener("click", () => {
+                            ItemCtrl.updateLikes();
+                        });
+                    };
+
+                    // Public methods
+                    return {
+                        init: () => {
+                            console.log("init app");
+
+                            // Load event listeners
+                            loadEventListeners();
+                        }
+                    }
+
+                })(ItemCtrl, UICtrl);
+
+                App.init();
+
+            </script>
+        {% endblock %}
+    </body>
+</html>
