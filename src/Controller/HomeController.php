@@ -209,8 +209,10 @@ class HomeController extends AbstractController
      */
     public function setLikes(Request $request)
     {        
+        //dump($request->server->get("HTTP_REFERER"));die;
 
-        $foodId = preg_replace("/http:\/\/food.com\/food\//", "", $request->server->get("HTTP_REFERER"));
+        //$foodId = preg_replace("/http:\/\/food.com\/food\//", "", $request->server->get("HTTP_REFERER"));
+        $foodId = preg_replace("/http:\/\/cookingsyomfony.bplaced.net\/food\//", "", $request->server->get("HTTP_REFERER"));
         //dump($foodId);die;
         
         $entityManager = $this->getDoctrine()->getManager();

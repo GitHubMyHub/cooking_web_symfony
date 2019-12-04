@@ -69,7 +69,7 @@
         <hr>
         <div class="row ml-3">
             {% for veganFood in veganFoods %}
-            <div class="card ml-3" style="width: 18rem;">
+            <div class="card ml-3 mb-4" style="width: 18rem;">
                 <a href="/food/{{ veganFood.id }}"><div class="picture-container"><img class="card-img-top" src="content/{{ veganFood.pictureName }}" alt="Bild von {{ veganFood.name }}"></div></a>
                 <div class="card-body d-flex flex-column">
                     <p class="ml-auto" style="font-size: 0.8rem; color: #868686;"><span class="fa fa-calendar fa-1x"> {{ veganFood.creationDate|date("d.m.Y") }}</span></p>
@@ -87,7 +87,7 @@
         <hr>
         <div class="row ml-3">
             {% for bakeFood in bakeFoods %}
-            <div class="card ml-3" style="width: 18rem;">
+            <div class="card ml-3 mb-4" style="width: 18rem;">
                 <a href="/food/{{ bakeFood.id }}"><div class="picture-container"><img class="card-img-top" src="content/{{ bakeFood.pictureName }}" alt="Bild von {{ bakeFood.name }}"></div></a>
                 <div class="card-body d-flex flex-column">
                     <p class="ml-auto" style="font-size: 0.8rem; color: #868686;"><span class="fa fa-calendar fa-1x"> {{ bakeFood.creationDate|date("d.m.Y") }}</span></p>

@@ -13,11 +13,17 @@
     }
 
     public static function getArticleName($name){
-        return strtolower(htmlentities (preg_replace('/\s+/', '_', $name)));
+        //dump(strtolower(Functions::umlauteUmwandeln(preg_replace('/\s+/', '_', $name))));die;
+        return strtolower(Functions::umlauteUmwandeln(preg_replace('/\s+/', '_', $name)));
     }
 
     public static function getArticleTitleName($name){
         return ucwords(preg_replace('/[_]+/', ' ', $name));
+    }
+
+    function umlauteUmwandeln($str){
+        $tempstr = ["Ä" => "AE", "Ö" => "OE", "Ü" => "UE", "ä" => "ae", "ö" => "oe", "ü" => "ue"];
+        return strtr($str, $tempstr);
     }
 
     public static function isMobile($userAgent) {

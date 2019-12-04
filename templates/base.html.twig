@@ -61,8 +61,9 @@
                             }
                         },
                         updateLikes: () => {
+                            //url: `http://food.com/setLikes/`,
                             $.get({
-                                url: `http://food.com/setLikes/`,
+                                url: `http://cookingsyomfony.bplaced.net/setLikes/`,
                                 type: 'GET',
                                 dataType: 'json',
                                 success: (data) => {
@@ -191,10 +192,12 @@
                                 e.preventDefault();
                                 if (currentFocus > -1) {
                                     /* zu aktiven item (Eintrag) navigieren */
-                                    location.href = `http://food.com/food/${x[currentFocus].children[1].value}`;
+                                    //location.href = `http://food.com/food/${x[currentFocus].children[1].value}`;
+                                    location.href = `http://cookingsyomfony.bplaced.net/public/${x[currentFocus].children[1].value}`;
                                 }else{
                                     /* Enter taste drücken wenn nach Begriff im Input Feld gesucht werden soll */
-                                    location.href = `http://food.com/foodsearch/${e.target.value}`;
+                                    //location.href = `http://food.com/foodsearch/${e.target.value}`;
+                                    location.href = `http://cookingsyomfony.bplaced.net/public/${e.target.value}`;
                                 }
                             }else if(e.which === 27){
                                 // ESC key

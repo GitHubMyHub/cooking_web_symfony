@@ -204,8 +204,33 @@ class AppFixtures extends Fixture
 
         $food = new Food();
         $food->setName("Vollkornkuchen mit Kirschen und Kokos");
-        $food->setDescription("Beispiel Beschreibung");
-        $food->setDescription2("Beispiel Beschreibung");
+        $food->setDescription("<ol>
+            <li>Kirschen waschen und entsteinen. Backblech einfetten und mit Backpapier auslegen. Backofen auf 180 Grad (Umluft: 160 Grad) vorheizen.<li>
+            <li>Weiche Butter mit Zucker, Vanillezucker und Salz schaumig schlagen. Nach und nach die Eier zugeben. Mehl mit Backpulver und Stärke mischen abwechselnd mit der Sahne unterrühren. Auf das Blech streichen.</li>
+            <li>Butter in einem Topf erwärmen, Zucker und Sahne zugeben. 2 Min. köcheln lassen. Kokosflocken zugeben und unterrühren. Kokosmasse vorsichtig auf dem Rührteig verteilen. Zum Schluss die Kirschen und darauf geben. Ca. 35 Min backen.</li>
+        </ol>");
+        $food->setDescription2("Für den Rührteig
+        <ul>
+            <li>1 kg frische Kirsche</li>
+            <li>250 g weiche Butter</li>
+            <li>180 g Zucker</li>
+            <li>1 Pck. Vanillinzucker</li>
+            <li>1 Prise Salz</li>
+            <li>5 Eier</li>
+            <li>300g Volkornmehl</li>
+            <li>50g Speisestärke</li>
+            <li>3 TL Backpulver</li>
+            <li>50g Sahne</li>
+            <li>etwas Butter für die Form</li>
+        </ul>
+        
+        Für die Kokosschicht
+        <ul>
+            <li>150g Butter</li>
+            <li>100g Zucker</li>
+            <li>150g Kokosflocken</li>
+            <li>50 - 100g Sahne</li>
+        </ul>");
         $food->setDuration("0:15:00");
         $food->setPictureName("6/vollkornkuchen_mit_kirschen_und_kokos.jpg");
         $food->setCreationDate(new \DateTime());

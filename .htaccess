@@ -1,0 +1,18 @@
+RewriteEngine On
+
+
+# News
+#RewriteRule ^public/list_news/page/([0-9]+) ?view=list_news&page=$1 [NC,L] #
+#RewriteRule ^cookingsyomfony.bplaced.net/ ?http://cookingsyomfony.bplaced.net/public/([0-9a-zA-Z]) [NC,L] #
+#RewriteRule http://cookingsyomfony.bplaced.net/ http://google.de [L,R=301] #
+
+#RewriteCond %{REQUEST_URI} (.*)
+#RewriteRule ^(.*)$ http://cookingsyomfony.bplaced.net/public/$1/$2 [L,R=301]
+#RewriteRule ^(.*)$ http://cookingsyomfony.bplaced.net/public/$1 [L,R=301]
+#RewriteRule ^public/ http://cookingsyomfony.bplaced.net/ [NC,L]
+
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^public
+RewriteRule ^(.*)$ public/$1/content/([0-9]+)/([a-zA-Z]) [L]
