@@ -50,8 +50,14 @@
                                     /* Listener wenn jemand auf den Eintrag in der Liste klickt (DIV element) */
                                     b.addEventListener("click", (e) => {
 
-                                        val.value = this.getElementsByTagName("input")[0].value;
-                                        location.href = `http://food.com/food/${e.target.querySelector('input').value}`;
+                                        console.log("->>>>>>>>>>>>>>>>>>>>");
+                                        console.log(e.target.childNodes[2].value);
+                                        console.log("->>>>>>>>>>>>>>>>>>>>");
+
+                                        //val.value = this.getElementsByTagName("input")[0].value;
+                                        val.value = e.target.childNodes[2].value;
+                                        //location.href = `http://food.com/food/${e.target.querySelector('input').value}`;
+                                        location.href = `http://cookingsyomfony.bplaced.net/public/food/${e.target.querySelector('input').value}`;
                                         /* schließt die Liste der Dropdownliste */
                                         UICtrl.closeAllLists();
                                     });
@@ -115,9 +121,12 @@
                         },
                         getRemoteItems: (e) => {
 
+                            //http://food.com/foodSearch/${e.target.value}
+                            //http://cookingsyomfony.bplaced.net/public/
+
                             if(e.target.value !== ""){
                                 $.get({
-                                    url: `http://food.com/foodSearch/${e.target.value}`,
+                                    url: `http://cookingsyomfony.bplaced.net/public/foodSearch/${e.target.value}`,
                                     type: 'GET',
                                     dataType: 'json',
                                     success: (data) => {
@@ -193,11 +202,11 @@
                                 if (currentFocus > -1) {
                                     /* zu aktiven item (Eintrag) navigieren */
                                     //location.href = `http://food.com/food/${x[currentFocus].children[1].value}`;
-                                    location.href = `http://cookingsyomfony.bplaced.net/public/${x[currentFocus].children[1].value}`;
+                                    location.href = `http://cookingsyomfony.bplaced.net/public/foodsearch/${x[currentFocus].children[1].value}`;
                                 }else{
                                     /* Enter taste drücken wenn nach Begriff im Input Feld gesucht werden soll */
                                     //location.href = `http://food.com/foodsearch/${e.target.value}`;
-                                    location.href = `http://cookingsyomfony.bplaced.net/public/${e.target.value}`;
+                                    location.href = `http://cookingsyomfony.bplaced.net/public/foodsearch/${e.target.value}`;
                                 }
                             }else if(e.which === 27){
                                 // ESC key
